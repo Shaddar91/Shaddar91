@@ -31,7 +31,7 @@ A game-stats platform, built end to end — match data flows through a Rust pipe
 
 ### [Cloud Lord](https://cloud-lord.com)
 
-My consulting practice — AWS platform engineering, migrations, and secure LLM/agent enablement. The [site source](https://github.com/Shaddar91/cloud-lord) and a [demo front end](https://github.com/Shaddar91/cloud-lord-demo-fe) are public.
+My consulting practice — AWS platform engineering, migrations, and secure LLM/agent enablement.
 
 ## 🛠️ Tech I reach for
 
