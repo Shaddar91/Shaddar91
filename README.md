@@ -1,22 +1,32 @@
 # Hi, I'm Shaddar 👋
 
-**Platform engineer — AWS, Terraform, Rust — building infrastructure as code and the autonomous agent systems that run on top of it.**
+I build infrastructure and the software that runs on it — AWS, Terraform, Kubernetes, and a lot of Rust. The thread through everything below: I like systems that run themselves, watch themselves, and get better without me babysitting them.
 
-I work Infrastructure-as-Code end to end: multi-account AWS architecture and landing zones, reusable Terraform modules, Kubernetes workloads, and CI/CD a team can read, review, and own. On top of that I run a self-hosted automation platform where voice and text turn into tasks that a fleet of AI agents plans, routes, and executes across my own infrastructure. I write Rust for the services that have to be fast and dependable, Python for the pipeline and data glue, and TypeScript/React on the front end. The whole stack is defined as code — repositories, AWS resources, and Kubernetes workloads are all provisioned with Terraform, so it rebuilds from scratch reproducibly. I'm especially drawn to systems that watch and correct themselves: knowledge graphs, retrieval-quality evaluation, and feedback loops that make the agents better over time.
+I also take this on as client work → 🌐 **[cloud-lord.com](https://cloud-lord.com)**
 
-I take this on as client work too → 🌐 **[cloud-lord.com](https://cloud-lord.com)**
+## What I'm building
 
-### 🔭 What I'm building
+### AITA — AI Task Automation *(private, opening up piece by piece)*
 
-- **Seneschal** — a regulatory-intelligence platform, split across a [Rust/Axum API](https://github.com/Shaddar91/seneschal-api), a [React/TypeScript web app](https://github.com/Shaddar91/seneschal-web), and a [change-detection watcher service](https://github.com/Shaddar91/seneschal-watchers).
-- **[Cloud Lord](https://cloud-lord.com)** — my consulting practice, its [site source](https://github.com/Shaddar91/cloud-lord), and a [demo front end](https://github.com/Shaddar91/cloud-lord-demo-fe) for the auth stack behind it.
-- **An autonomous task pipeline** — voice and text in, planned and routed work out, across a Rust + Kafka scheduler, a tiered knowledge and retrieval layer, and Terraform-provisioned infrastructure. Private for now — see below.
+The big one. I speak or type a task, and a fleet of AI agents takes it from there: one plans the work, others route it to the right specialist, execute it on my own infrastructure, and record what they learned so the next run is smarter. Under the hood: a Rust + Kafka task scheduler, a tiered knowledge and retrieval layer the agents share, retrieval-quality evals to catch the pipeline lying to itself, and Terraform provisioning every resource it touches — the whole platform rebuilds from scratch. It's private while I pull the operator-specific bits out; the reusable pieces are being split off as standalone repos, starting with the one below.
 
-### 🔒 About the private repos
+### [tf-apply-runner](https://github.com/Shaddar91/tf-apply-runner) — Terraform for your agents, without the token bill
 
-Most of what I ship day to day still lives in private repositories: the agent pipeline, the knowledge and retrieval services, and the Terraform that provisions all of it. They're private while the interfaces settle and the operator-specific pieces get pulled out — not because there's nothing in them. I'm opening them up as they're cleaned for public use, so this list is going to get longer.
+First piece of AITA in the open. A small Rust service that runs Terraform *on behalf of* AI agents: the agent POSTs a directory, gets back a run id, and that's all it ever sees. The full plan/apply log streams to disk instead of into the model's context window, and credentials never touch the agent at all. If you run coding agents against real infrastructure, this is the difference between burning thousands of tokens per apply and burning a few dozen. Ships with an MCP door so your agents can plug straight in.
 
-### 🛠️ Tech I reach for
+### RankLock *(private for now)*
+
+A game-stats platform, built end to end: Rust ingestion pipeline over Kafka, watermark-gated promotion from processing into the serving database, Grafana dashboards managed as code, and privacy designed in from day one — accounts become irreversible HMAC tokens, with an opt-out gate wired into the pipeline itself.
+
+### Seneschal
+
+A regulatory-intelligence platform: a [Rust/Axum API](https://github.com/Shaddar91/seneschal-api), a [React/TypeScript web app](https://github.com/Shaddar91/seneschal-web), and a [watcher service](https://github.com/Shaddar91/seneschal-watchers) that detects when regulations change.
+
+### [Cloud Lord](https://cloud-lord.com)
+
+My consulting practice — AWS platform engineering, migrations, and secure LLM/agent enablement. The [site source](https://github.com/Shaddar91/cloud-lord) and a [demo front end](https://github.com/Shaddar91/cloud-lord-demo-fe) are public.
+
+## 🛠️ Tech I reach for
 
 ![Rust](https://img.shields.io/badge/Rust-000000?style=flat&logo=rust&logoColor=white)
 ![Python](https://img.shields.io/badge/Python-3776AB?style=flat&logo=python&logoColor=white)
@@ -31,15 +41,11 @@ Most of what I ship day to day still lives in private repositories: the agent pi
 ![PostgreSQL](https://img.shields.io/badge/PostgreSQL-4169E1?style=flat&logo=postgresql&logoColor=white)
 ![GitHub Actions](https://img.shields.io/badge/GitHub%20Actions-2088FF?style=flat&logo=githubactions&logoColor=white)
 
-### 🤝 Working together
-
-I take on AWS platform engineering, cloud migrations, and secure LLM and agent enablement — fixed-scope audit first, then implementation in clear two-week chunks. Scope, approach, and contact are all at **[cloud-lord.com](https://cloud-lord.com)**.
-
-### 📊 GitHub
+## 📊 GitHub
 
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="https://github-readme-stats.vercel.app/api?username=Shaddar91&show_icons=true&hide_border=true&theme=tokyonight">
   <img alt="Shaddar91's GitHub stats" src="https://github-readme-stats.vercel.app/api?username=Shaddar91&show_icons=true&hide_border=true">
 </picture>
 
-<sub>Counters below only see public repositories — most of the work above is still private.</sub>
+<sub>The stats only count public repos — most of the work above is still private and coming out gradually.</sub>
