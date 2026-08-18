@@ -16,9 +16,16 @@ The big one. I speak or type a task, and a fleet of AI agents takes it from ther
 
 The first AITA piece that's public — the rest are following. A small Rust service that runs Terraform *on behalf of* AI agents: the agent POSTs a directory, gets back a run id, and that's all it ever sees. The full plan/apply log streams to disk instead of into the model's context window, and credentials never touch the agent at all. If you run coding agents against real infrastructure, this is the difference between burning thousands of tokens per apply and burning a few dozen. Ships with an MCP door so your agents can plug straight in.
 
-### [RankLock](https://ranklock.app) *(repos private for now)*
+### [RankLock](https://ranklock.app)
 
-A game-stats platform, built end to end: Rust ingestion pipeline over Kafka, watermark-gated promotion from processing into the serving database, Grafana dashboards managed as code, and privacy designed in from day one — accounts become irreversible HMAC tokens, with an opt-out gate wired into the pipeline itself.
+A game-stats platform, built end to end — match data flows through a Rust pipeline into a serving database, and the compute that crunches it only exists while there's work to do. The moving parts:
+
+- **Ingestion & analytics** — Rust services coordinated over a Kafka event bus, with backfill and analytics as separate crates so each scales on its own.
+- **Dynamic infrastructure** — a Kafka-command-driven provisioner spins up cloud servers when analytics or backfill work lands and tears them down when the queue drains. Every box is tracked in Postgres; nothing sits idle burning money.
+- **Promotion gate** — processed data reaches the serving database only through a watermark-gated, alignment-checked append, so a bad batch can't make it in front of users.
+- **Privacy by construction** — accounts become irreversible HMAC tokens before anything is stored, and an opt-out suppression gate is wired into the pipeline itself.
+- **Observability as code** — Grafana dashboards live in Git and auto-sync to the ops stack.
+- A React/TypeScript frontend on top, plus small supporting services like social-preview card rendering.
 
 ### [Cloud Lord](https://cloud-lord.com)
 
