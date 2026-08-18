@@ -6,6 +6,8 @@ I also take this on as client work → 🌐 **[cloud-lord.com](https://cloud-lor
 
 Open-source contributor @ **[Djed Alliance](https://github.com/DjedAlliance)**
 
+Also me on GitHub: **[clawddar](https://github.com/clawddar)** (AI-agent experiments) and **[shaddar-aw](https://github.com/shaddar-aw)**.
+
 ## What I'm building
 
 ### AITA — AI Task Automation *(private, opening up piece by piece)*
